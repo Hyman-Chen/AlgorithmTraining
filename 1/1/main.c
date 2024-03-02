@@ -49,57 +49,39 @@ int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
  * };
  */
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
-    List tmp1 = l1;
-    List tmp2 = l2;
-    List Li = (List)malloc(sizeof(struct ListNode));
-    Li->next = NULL;
-    int index,sum = 0;
+    struct ListNode *ptr1 = l1, *ptr2 = l2,*head = NULL,*tail = NULL;
     int jinwei = 0;
-    for (index=1;(tmp1->next != NULL && tmp2->next != NULL); index *= 10){
-        sum += index * ((tmp1->data + tmp2->data) % 10 + jinwei);
-        jinwei = (tmp1->data + tmp2->data + jinwei) / 10;
-        tmp1 = tmp1->next;
-        tmp2 = tmp2->next;
-        
-    }
-    if (l1->next == NULL)
-        for (;tmp2->next;tmp2=tmp2->next){
-            index *= 10;
-            sum += index * ((tmp2->data + jinwei) % 10);
-            jinwei = (tmp2->data + jinwei) / 10;
+    while (ptr1 || ptr2){
+        int n1 = ptr1?ptr1->val:0;
+        int n2 = ptr2?ptr2->val:0;
+        int sum = n1 + n2 +jinwei;
+        if (!head){
+            head = (struct ListNode*)malloc(sizeof(struct ListNode));
+            head->next = NULL;
+            head->val = sum % 10;
+            tail = head;
+        } else {
+            tail->next = (struct ListNode*)malloc(sizeof(struct ListNode));
+            tail = tail->next;
+            tail->val = sum % 10;
+            tail->next = NULL;
         }
-    else{
-        for (;tmp1->next;tmp1=tmp1->next){
-            index *= 10;
-            sum += index * ((tmp1->data + jinwei) % 10);
-            jinwei = (tmp1->data + jinwei) / 10;
-        }
+        jinwei = sum / 10;
+        if (ptr1) ptr1 = ptr1->next;
+        if (ptr2) ptr2 = ptr2->next;
     }
-    if (jinwei>=1) {
-        index *= 10;
-        sum += index * jinwei;
+    if (jinwei >= 1){
+        tail->next = (struct ListNode*)malloc(sizeof(struct ListNode));
+        tail->next->val = jinwei;
+        tail->next->next = NULL;
     }
-    while (index){
-        List L = (List)malloc(sizeof(struct ListNode));
-        L->next = Li->next;
-        L->data = sum / index;
-        Li->next = L;
-        index /= 10;
-    }
-    List returnList;
-    returnList = Li->next;
-    free(Li);
-    return returnList;
-    
-        
-    return returnList;
+    return head;
 }
-
 // 插入函数
 void Insert(List *L,int X){
     List Tmp = (List)malloc(sizeof(struct ListNode));
     Tmp->next = *L;
-    Tmp->data = X;
+    Tmp->val = X;
     *L = Tmp;
 }
 int main(int argc, const char * argv[]) {
@@ -119,7 +101,7 @@ int main(int argc, const char * argv[]) {
     Insert(&l1,7);
     List L = l1;
     while (L){
-        printf("%d",L->data);
+        printf("%d",L->val);
         L = L->next;
     }
     Insert(&l2,9);
@@ -128,13 +110,13 @@ int main(int argc, const char * argv[]) {
     List L2= l2;
     printf("\n");
     while (L2){
-        printf("%d",L2->data);
+        printf("%d",L2->val);
         L2 = L2->next;
     }
     printf("\n");
     List returnList = addTwoNumbers(l1,l2);
     while (returnList){
-        printf("%d",returnList->data);
+        printf("%d",returnList->val);
         returnList = returnList->next;
     }
     printf("\n");

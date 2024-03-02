@@ -9,7 +9,7 @@
 #define Header_h
 typedef struct ListNode* List;
 struct ListNode{
-    int data;
+    int val;
     struct ListNode* next;
 };
 
