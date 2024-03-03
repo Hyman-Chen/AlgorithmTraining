@@ -77,6 +77,43 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
     }
     return head;
 }
+// 3
+int lengthOfLongestSubstring(char* s) {
+    int tmp = 0, head = 0, length = 0, max = 0, retMax = 0, i =0,lengthptr = 0,j;
+    
+    // 计算s的长度
+    while (1) {
+        if (s[length])
+        {
+            length++;
+        }
+        else
+            break;
+    }
+    char* ptr = (char*)malloc(sizeof(char) * length);
+    
+    for (i=head;i<length;i++){
+        ptr[i-head] = s[i];
+        for (j=0;j<i-head-1;j++){
+            printf("%c---",ptr[j]);
+            printf("%c\n",ptr[i-head]);
+
+            if (ptr[i-head]==ptr[j]){
+                printf("%c\n",s[i]);
+                max = 0;
+                head+=1;
+                i = head;
+                break;
+            }else{
+                max += 1;
+            }
+        }
+    }
+    retMax = max>retMax?max:retMax;
+    free(ptr);
+    return retMax+1;
+}
+
 // 插入函数
 void Insert(List *L,int X){
     List Tmp = (List)malloc(sizeof(struct ListNode));
@@ -85,41 +122,44 @@ void Insert(List *L,int X){
     *L = Tmp;
 }
 int main(int argc, const char * argv[]) {
+// 1
 //    int nums[4] = {2,7,11,15};
 //    int target = 9;
 //    int *returnSize = (int*)malloc(sizeof(int));
 //    int *sum = twoSum(nums, 4, target, returnSize);
 //    for (int i=0;i<*returnSize;i++)
 //        printf("%d\n",nums[i]);
-//
-    List l1,l2;
-    l1 = NULL;
-    l2 = NULL;
-    Insert(&l1,3);
-    Insert(&l1,4);
-    Insert(&l1,6);
-    Insert(&l1,7);
-    List L = l1;
-    while (L){
-        printf("%d",L->val);
-        L = L->next;
-    }
-    Insert(&l2,9);
-    Insert(&l2,1);
-    Insert(&l2,6);
-    List L2= l2;
-    printf("\n");
-    while (L2){
-        printf("%d",L2->val);
-        L2 = L2->next;
-    }
-    printf("\n");
-    List returnList = addTwoNumbers(l1,l2);
-    while (returnList){
-        printf("%d",returnList->val);
-        returnList = returnList->next;
-    }
-    printf("\n");
-
+// 2
+//    List l1,l2;
+//    l1 = NULL;
+//    l2 = NULL;
+//    Insert(&l1,3);
+//    Insert(&l1,4);
+//    Insert(&l1,6);
+//    Insert(&l1,7);
+//    List L = l1;
+//    while (L){
+//        printf("%d",L->val);
+//        L = L->next;
+//    }
+//    Insert(&l2,9);
+//    Insert(&l2,1);
+//    Insert(&l2,6);
+//    List L2= l2;
+//    printf("\n");
+//    while (L2){
+//        printf("%d",L2->val);
+//        L2 = L2->next;
+//    }
+//    printf("\n");
+//    List returnList = addTwoNumbers(l1,l2);
+//    while (returnList){
+//        printf("%d",returnList->val);
+//        returnList = returnList->next;
+//    }
+//    printf("\n");
+// 3
+    char *S = "abcdd";
+    printf("%d\n",lengthOfLongestSubstring(S));
     return 0;
 }
